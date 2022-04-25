@@ -1,4 +1,4 @@
 module.exports = {
-    Singer: require('./Singer'),
-    Song: require('./Song')
+    singers: require('./Singer'),
+    songs: require('./Song')
 }

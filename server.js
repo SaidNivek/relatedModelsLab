@@ -37,8 +37,8 @@ app.use(express.urlencoded({ extended: false }))
 
 // CONTROLLERS 
 
-app.use('/products', controllers.products) // "products" router
-app.use('/reviews', controllers.reviews) // reviews controller
+app.use('/singers', controllers.singers) // "products" router
+app.use('/songs', controllers.songs) // reviews controller
 // additional controllers can be added here. These controllers will handle requests for other resources (transactions, users, auth, landing pages, etc)
 
 /* 
@@ -56,7 +56,7 @@ app.use('/reviews', controllers.reviews) // reviews controller
 
 // Products "Home" route 
 
-app.get('/', (request, response) => response.send('Welcome to Sell-it-UP!'))
+app.get('/', (request, response) => response.send('Welcome to Singers and their Songs!'))
 
 /* 
     EXPRESS Server: initializes the server; app.listen allows your computer to receive requests at http://localhost:4000/ 

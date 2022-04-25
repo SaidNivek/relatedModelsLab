@@ -29,9 +29,9 @@ const db = require('../models')
 // get all products route
 router.get('/', async (req, res, next) => {
     try {
-        const products = await db.Product.find({});
-        const context = { products }
-        console.log(products);
+        const singers = await db.Singer.find({});
+        const context = { singers }
+        console.log(singers);
         return res.render('index.ejs', context);
     } catch (error) {
         console.log(error);
@@ -53,12 +53,12 @@ router.get('/new', (req, res) => {
 
 router.get('/:id/', async (req, res, next) => {
     try {
-        const foundProduct = await db.Product.findById(req.params.id)
-        const allReviews = await db.Review.find({product: req.params.id})
-        console.log(allReviews.length, 'Reviews Found');
+        const foundSinger = await db.Singer.findById(req.params.id)
+        const allSongs = await db.Song.find({singer: req.params.id})
+        console.log(allSongs.length, 'Songs Found');
         const context = { 
-            oneProduct: foundProduct,
-            reviews: allReviews,
+            oneSinger: foundSinger,
+            songs: allSongs,
             message: "Hello there"
         }
         return res.render('show.ejs', context)
@@ -76,10 +76,10 @@ router.get('/:id/', async (req, res, next) => {
 
 router.get('/:id/edit', async (req,res, next)=>{
     try {
-        const updatedProduct = await db.Product.findById(req.params.id);
-        console.log(updatedProduct);
+        const updatedSinger = await db.Singer.findById(req.params.id);
+        console.log(updatedSinger);
         const context = {
-            product: updatedProduct
+            singer: updatedSinger
         }
         return res.render('edit.ejs', context)
     } catch (error) {
@@ -107,9 +107,9 @@ router.get('/:id/edit', async (req,res, next)=>{
 router.post('/', async (req, res, next) => {
     try {
         // console.log(`The req.body is ${req.body}`)
-        const createdProduct = await db.Product.create(req.body);
-        console.log(`The created product is ${createdProduct}`)
-        res.redirect('/products');
+        const createdSinger = await db.Singer.create(req.body);
+        console.log(`The created Singer is ${createdSinger}`)
+        res.redirect('/singers');
     } catch (error) {
         console.log(error);
         req.error = error;
@@ -125,15 +125,15 @@ router.post('/', async (req, res, next) => {
 
 router.delete('/:id', async (req,res, next)=>{
     try {
-        const deletedProduct = await db.Product.findByIdAndDelete(req.params.id);
+        const deletedSinger = await db.Singer.findByIdAndDelete(req.params.id);
         // delete one product (req.params.id)
         // find all reviews where product == req.params.id | delete those as well
-        const deletedReviews = await db.Review.deleteMany({product: req.params.id})
+        const deletedSongs = await db.Song.deleteMany({singer: req.params.id})
         // confirming the deletion of reviews 
         // 'orphan' documents in our reviews collection are removed
 
-        console.log(deletedReviews);
-        return res.redirect('/products')
+        console.log(deletedSongs);
+        return res.redirect('/singers')
     } catch (error) {
         console.log(error);
         req.error = error;
@@ -148,15 +148,14 @@ router.delete('/:id', async (req,res, next)=>{
 
 router.put('/:id', async (req, res, next)=>{
     try {
-        const updatedProduct = await db.Product.findByIdAndUpdate(req.params.id, req.body);
-        console.log(updatedProduct);
-        return res.redirect(`/products`)
+        const updatedSinger = await db.Singer.findByIdAndUpdate(req.params.id, req.body);
+        console.log(updatedSinger);
+        return res.redirect(`/singers`)
     } catch (error) {
         console.log(error);
         req.error = error;
         return next();
     }
 })
-
 
 module.exports = router
